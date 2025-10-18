@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class PlayerCover : MonoBehaviour
 {
-    [Header("Referencia al arma")]
     public GunScript gunScript;
-    [Header("Tecla para cubrirse")]
-    public KeyCode coverKey = KeyCode.Space;
 
-    [Header("Altura al cubrirse")]
-    public float coverY = -0.5f;
+    private KeyCode coverKey = KeyCode.Space;
 
-    [Header("Tiempo que tarda la recarga")]
+    public float coverY;
+
     public float reloadTime = 1f;
 
     [HideInInspector] public bool isCovering = false;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GunScript : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GunScript : MonoBehaviour
     public float maxDistance = 1000f;
     public float fireRate = 0.3f;
     public AudioSource shootAudio;
+    public TMP_Text ammoText;
 
     public int maxAmmo = 6;
     public int currentAmmo;
@@ -19,12 +21,15 @@ public class GunScript : MonoBehaviour
     void Start()
     {
         currentAmmo = maxAmmo;
+        UpdateAmmoUI();
     }
 
     void Update()
     {
         if (isReloading || (playerCover != null && playerCover.isCovering))
             return;
+
+        UpdateAmmoUI();
 
         if (Input.GetMouseButtonDown(0) && Time.time >= FireTime)
         {
@@ -95,7 +100,13 @@ public class GunScript : MonoBehaviour
 
         currentAmmo = maxAmmo;
         isReloading = false;
+        UpdateAmmoUI();
 
         Debug.Log("Reload complete");
+    }
+    private void UpdateAmmoUI()
+    {
+        if (ammoText != null)
+            ammoText.text = currentAmmo.ToString();
     }
 }
