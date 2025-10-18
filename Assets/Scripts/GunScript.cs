@@ -7,6 +7,7 @@ public class GunScript : MonoBehaviour
 
     public float maxDistance = 1000f;
     public float fireRate = 0.3f;
+    public AudioSource shootAudio;
 
     private float FireTime = 0;
 
@@ -32,6 +33,8 @@ public class GunScript : MonoBehaviour
             if (Physics.Raycast(gunPos.position, shootDirection, out RaycastHit hitInfo, maxDistance))
             {
                 Debug.DrawLine(gunPos.position, hitInfo.point, Color.red, 1f);
+                if (shootAudio != null)
+                    shootAudio.Play();
 
                 if (hitInfo.collider.CompareTag("Enemy"))
                 {
@@ -50,6 +53,8 @@ public class GunScript : MonoBehaviour
             else
             {
                 Debug.DrawRay(gunPos.position, shootDirection * maxDistance, Color.yellow, 1f);
+                if (shootAudio != null)
+                    shootAudio.Play();
                 Debug.Log("No hit");
             }
         }
