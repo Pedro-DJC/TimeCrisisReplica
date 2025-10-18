@@ -9,15 +9,35 @@ public class GunScript : MonoBehaviour
     public float fireRate = 0.3f;
     public AudioSource shootAudio;
 
+    public int maxAmmo = 6;
+    public int currentAmmo;
+
     private float FireTime = 0;
+    [HideInInspector] public bool isReloading = false;
+    public PlayerCover playerCover;
+
+    void Start()
+    {
+        currentAmmo = maxAmmo;
+    }
 
     void Update()
     {
+        if (isReloading || (playerCover != null && playerCover.isCovering))
+            return;
+
         if (Input.GetMouseButtonDown(0) && Time.time >= FireTime)
         {
-            FireTime = Time.time + fireRate;
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (currentAmmo <= 0)
+            {
+                Debug.Log("Reload");
+                return;
+            }
 
+            FireTime = Time.time + fireRate;
+            currentAmmo--;
+
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             Vector3 targetPoint;
             if (Physics.Raycast(ray, out RaycastHit camHit, maxDistance))
             {
@@ -58,5 +78,24 @@ public class GunScript : MonoBehaviour
                 Debug.Log("No hit");
             }
         }
+    }
+    public void Reload()
+    {
+        if (!isReloading)
+            StartCoroutine(ReloadCoroutine());
+    }
+
+    private System.Collections.IEnumerator ReloadCoroutine()
+    {
+        isReloading = true;
+
+        Debug.Log(" Reloading...");
+
+        yield return new WaitForSeconds(1f);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+
+        Debug.Log("Reload complete");
     }
 }
