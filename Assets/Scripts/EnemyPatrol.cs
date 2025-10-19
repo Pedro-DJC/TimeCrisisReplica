@@ -29,6 +29,12 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    public void Shooting()
+    {
+        Debug.Log("Enemy is shooting at point " + targetPoint);
+        PlayerHealthManager.Instance.DamageTaken();
+    }
+
     IEnumerator WaitAndMoveNext()
     {
         waiting = true;
@@ -39,6 +45,11 @@ public class EnemyPatrol : MonoBehaviour
         if (targetPoint >= patrolPoints.Length)
         {
             targetPoint = 0;
+        }
+
+        if (targetPoint != 0)
+        {
+            Shooting();
         }
 
         waiting = false;
