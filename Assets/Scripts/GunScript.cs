@@ -30,9 +30,6 @@ public class GunScript : MonoBehaviour
         if (isReloading || (playerCover != null && playerCover.isCovering))
             return;
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            return;
-
         UpdateAmmoUI();
 
         if (Input.GetMouseButtonDown(0) && Time.time >= FireTime)
