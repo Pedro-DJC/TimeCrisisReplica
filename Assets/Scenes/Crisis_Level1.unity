@@ -24541,7 +24541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 1987348225}
   restartPanel: {fileID: 678143907}
-  startTime: 10
+  startTime: 60
 --- !u!4 &1285981091
 Transform:
   m_ObjectHideFlags: 0
