@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GunScript : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class GunScript : MonoBehaviour
     void Update()
     {
         if (isReloading || (playerCover != null && playerCover.isCovering))
+            return;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
         UpdateAmmoUI();

@@ -4,6 +4,7 @@ using TMPro;
 public class TimerManager : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public GameObject restartPanel; 
 
     public float startTime = 60f;   
 
@@ -15,6 +16,9 @@ public class TimerManager : MonoBehaviour
     {
         currentTime = startTime;
         UpdateTimerText();
+
+        if (restartPanel != null)
+            restartPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,6 +35,7 @@ public class TimerManager : MonoBehaviour
             isRunning = false;
             UpdateTimerText();
             Debug.Log("Time´s over");
+            StopGame();
             return;
         }
 
@@ -42,5 +47,15 @@ public class TimerManager : MonoBehaviour
         int centiseconds = Mathf.FloorToInt((currentTime * 100) % 100);
 
         timerText.text = string.Format("{0:00}:{1:00}",seconds, centiseconds);
+    }
+    void StopGame()
+    {
+        Time.timeScale = 0f;
+
+        if (restartPanel != null)
+            restartPanel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
