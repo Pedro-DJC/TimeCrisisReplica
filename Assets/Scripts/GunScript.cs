@@ -73,6 +73,12 @@ public class GunScript : MonoBehaviour
                 }
                 else if (hitInfo.collider.CompareTag("Barrel"))
                 {
+                    ExplosiveBarrel barrel = hitInfo.collider.GetComponent<ExplosiveBarrel>();
+                    if (barrel != null)
+                    {
+                        barrel.OnHit();
+                    }
+
                     Debug.Log("Barrel");
                 }
             }
