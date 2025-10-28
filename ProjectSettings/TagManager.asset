@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Box
   - Barrel
+  - PatrolPoint
   layers:
   - Default
   - TransparentFX
@@ -14,11 +15,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - EnemyNormal
+  - PatrolPointNormal
+  - PatrolPointShield
+  - PatrolPointRocket
+  - EnemyShield
   - 
   - 
   - 

@@ -1,43 +1,117 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyPatrol : MonoBehaviour
 {
+    // Variables desde el inspector
     public Transform[] patrolPoints;
     public int targetPoint = 0;
-    public float speed = 2f;
     public float waitTime = 2f; // segundos de espera en cada punto
+    [SerializeField] public int enemyType;
+    public NavMeshAgent agent;
 
-    private bool waiting = false;
+    // Variables internas
+    public bool enemyCover = false;
+    public bool enemyAlive = true;
+    int warningShots = 0;
 
-    void Update()
+    void Start()
     {
-        if (!waiting)
-        {
-            // Mover hacia el punto objetivo
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                patrolPoints[targetPoint].position,
-                speed * Time.deltaTime
-            );
+        agent.SetDestination(patrolPoints[targetPoint].position);
+    }
 
-            // Si llegó al punto, iniciar espera
-            if (Vector3.Distance(transform.position, patrolPoints[targetPoint].position) < 0.01f)
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Enemy entered trigger with " + other.gameObject.name);
+        if (other.CompareTag("PatrolPoint") && enemyAlive)
+        {
+            switch (enemyType)
             {
-                StartCoroutine(WaitAndMoveNext());
+                case 0: // Enemigo que llega y dispara, sin ocultarse
+                    StartCoroutine(ShootingLoop(0));
+                    break;
+
+                /*case 1: // Enemigo que llega, se oculta y dispara
+                    StartCoroutine(WaitAndMoveNext());
+                    break;*/
+
+                case 2: // Enemigo con escudo
+                    StartCoroutine(ShootingLoop(2));
+                    break;
+
+                default:
+                    break;
             }
         }
     }
 
-    public void Shooting()
+    IEnumerator ShootingLoop(int Type)
     {
-        Debug.Log("Enemy is shooting at point " + targetPoint);
-        PlayerHealthManager.Instance.DamageTaken();
+        switch (Type)
+        {
+            case 0:
+                ShootingNormal();
+                yield return StartCoroutine(EnemyReload(Type)); // espera la recarga antes de continuar
+                break;
+
+            case 2:
+                ShootingNormal();
+                yield return new WaitForSeconds(2f);
+                StartCoroutine(EnemyShield());
+                yield return StartCoroutine(EnemyReload(Type)); // espera la recarga antes de continuar
+                break;
+
+
+            default:
+                break;
+        }
+    }
+
+    public void ShootingNormal()
+    {
+        if (warningShots < 5)
+        {
+            Debug.Log("Enemy is shooting, but misses");
+            warningShots++;
+        }
+
+        if (warningShots == 5)
+        {
+            Debug.Log("Enemy is shooting at point " + targetPoint);
+            PlayerHealthManager.Instance.DamageTaken();
+            warningShots = 0;
+        }
+    }
+
+    IEnumerator EnemyReload(int Type)
+    {
+        Debug.Log("Enemy is reloading...");
+
+        yield return new WaitForSeconds(5f); // Tiempo de recarga
+
+        if (enemyAlive)
+        {
+            StartCoroutine(ShootingLoop(Type));
+        }
+        else
+        {
+            Debug.Log("Enemy is dead, stopping reload.");
+        }
+    }
+
+    IEnumerator EnemyShield()
+    {
+        Debug.Log("Enemy is raising shield...");
+        enemyCover = true;
+        yield return new WaitForSeconds(3f); // Tiempo con escudo
+        Debug.Log("Enemy is lowering shield...");
+        enemyCover = false;
     }
 
     IEnumerator WaitAndMoveNext()
     {
-        waiting = true;
         yield return new WaitForSeconds(waitTime); // Espera unos segundos
 
         // Cambiar al siguiente punto
@@ -49,9 +123,7 @@ public class EnemyPatrol : MonoBehaviour
 
         if (targetPoint != 0)
         {
-            Shooting();
+            //Shooting();
         }
-
-        waiting = false;
     }
 }
