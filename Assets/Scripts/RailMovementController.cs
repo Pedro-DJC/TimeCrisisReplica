@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.Splines;
 
 public class RailMovementController : MonoBehaviour
 {
@@ -26,12 +27,12 @@ public class RailMovementController : MonoBehaviour
         float splineLength = splineCart.Spline.CalculateLength();
 
         float delta;
-        if (splineCart.PositionUnits == Unity.Cinemachine.PathIndexUnit.Distance)
+        if (splineCart.PositionUnits == PathIndexUnit.Distance)
         {
             delta = speed * Time.deltaTime;
             splineCart.SplinePosition += delta;
         }
-        else if (splineCart.PositionUnits == Unity.Cinemachine.PathIndexUnit.Normalized)
+        else if (splineCart.PositionUnits == PathIndexUnit.Normalized)
         {
             float speedNormalized = (splineLength > 0f) ? speed / splineLength : speed;
             delta = speedNormalized * Time.deltaTime;
@@ -44,7 +45,7 @@ public class RailMovementController : MonoBehaviour
             splineCart.SplinePosition += delta;
         }
 
-        float maxPos = (splineCart.PositionUnits == Unity.Cinemachine.PathIndexUnit.Distance) ? splineLength : 1f;
+        float maxPos = (splineCart.PositionUnits == PathIndexUnit.Distance) ? splineLength : 1f;
         if (splineCart.SplinePosition >= maxPos)
         {
             if (loop)
