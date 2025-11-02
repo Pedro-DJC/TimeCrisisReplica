@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6423647635513612352}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunScript: {fileID: 0}
-  coverY: -0.2
+  coverY: -1
   reloadTime: 1
   isCovering: 0
 --- !u!1 &4264635071139779879
