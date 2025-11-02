@@ -33,12 +33,16 @@ public class EnemyPatrol : MonoBehaviour
                     StartCoroutine(ShootingLoop(0));
                     break;
 
-                /*case 1: // Enemigo que llega, se oculta y dispara
-                    StartCoroutine(WaitAndMoveNext());
-                    break;*/
+                case 1: // Enemigo que llega, se oculta y dispara
+                    Debug.Log("Type 1 Secuence");
+                    StartCoroutine(ShootingLoop(1));
+                    break;
 
                 case 2: // Enemigo con escudo
                     StartCoroutine(ShootingLoop(2));
+                    break;
+
+                case 3: // Enemigo con Bazooka
                     break;
 
                 default:
@@ -55,6 +59,12 @@ public class EnemyPatrol : MonoBehaviour
                 ShootingNormal();
                 yield return StartCoroutine(EnemyReload(Type)); // espera la recarga antes de continuar
                 break;
+
+            case 1:
+                //Debug.Log("Case 1 Started");
+                StartCoroutine(WaitAndMoveNext());
+                break;
+
 
             case 2:
                 ShootingNormal();
@@ -73,13 +83,13 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (warningShots < 5)
         {
-            Debug.Log("Enemy is shooting, but misses");
+            Debug.Log("Enemy is shooting, but misses, shots: " + warningShots);
             warningShots++;
         }
 
         if (warningShots == 5)
         {
-            Debug.Log("Enemy is shooting at point " + targetPoint);
+            Debug.Log("Enemy is shooting at player!");
             PlayerHealthManager.Instance.DamageTaken();
             warningShots = 0;
         }
@@ -112,18 +122,35 @@ public class EnemyPatrol : MonoBehaviour
 
     IEnumerator WaitAndMoveNext()
     {
-        yield return new WaitForSeconds(waitTime); // Espera unos segundos
-
-        // Cambiar al siguiente punto
-        targetPoint++;
-        if (targetPoint >= patrolPoints.Length)
+        if (targetPoint == 0)
         {
-            targetPoint = 0;
+            Debug.Log("Waiting");
+            yield return new WaitForSeconds(waitTime); // Espera unos segundos
+
+            // Cambiar al siguiente punto
+            Debug.Log("Moving");
+            targetPoint++;
+            agent.SetDestination(patrolPoints[targetPoint].position);
+
+            yield return new WaitForSeconds(waitTime);
+            if (targetPoint >= patrolPoints.Length)
+            {
+                Debug.Log("Patrol finished.");
+            }
+
+            if (targetPoint != 0)
+            {
+                //Shooting();
+            }
+
+            ShootingLoop(0);
         }
-
-        if (targetPoint != 0)
+        else
         {
-            //Shooting();
+            Debug.Log("Waiting");
+            yield return new WaitForSeconds(1f); // Espera unos segundos
+
+            yield return ShootingLoop(0);
         }
     }
 }
