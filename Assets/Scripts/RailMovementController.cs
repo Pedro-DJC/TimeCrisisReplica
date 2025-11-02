@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.Splines;
+using System.Collections;
 
 public class RailMovementController : MonoBehaviour
 {
@@ -48,6 +49,27 @@ public class RailMovementController : MonoBehaviour
                 isMoving = false;
             }
         }
+    }
+    public void MoveToPosition(float targetPosition)
+    {
+        StartCoroutine(MoveToPositionCoroutine(targetPosition));
+    }
+
+    private IEnumerator MoveToPositionCoroutine(float target)
+    {
+        float current = splineCart.SplinePosition;
+        float dir = Mathf.Sign(target - current);
+
+        while ((dir > 0 && splineCart.SplinePosition < target) ||
+               (dir < 0 && splineCart.SplinePosition > target))
+        {
+            float delta = (speed * Time.deltaTime) / splineCart.Spline.CalculateLength();
+            splineCart.SplinePosition += delta * dir;
+            yield return null;
+        }
+
+        splineCart.SplinePosition = target;
+        StopMoving();
     }
     public void StartMoving() => isMoving = true;
     public void StopMoving() => isMoving = false;
