@@ -2,40 +2,44 @@ using UnityEngine;
 
 public class CombatZones : MonoBehaviour
 {
-    public RailMovementController railMovement;
-    public bool zoneCleared = false;
+    public RailMovementController railController;
+    public bool autoAdvanceOnClear = true;
+    public float autoAdvanceDelay = 3f;
 
-    bool playerInside = false;
+    private bool playerInZone = false;
+    private bool cleared = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        Debug.Log("[CombatZone] Jugador entró a la zona: DETENIENDO carrito");
-
-        playerInside = true;
-
-        if (railMovement != null)
-            railMovement.StopMoving();
-    }
-
-    void Update()
-    {
-        if (playerInside && zoneCleared)
+        if (other.CompareTag("Player") && !playerInZone)
         {
-            ZoneCleared();
+            playerInZone = true;
+            Debug.Log("[CombatZone] Jugador entró a la zona: DETENIENDO carrito");
+
+            if (railController != null)
+                railController.StopMoving();
+
+            if (autoAdvanceOnClear)
+                Invoke(nameof(AutoAdvance), autoAdvanceDelay);
         }
     }
 
-    public void ZoneCleared()
+    void AutoAdvance()
     {
-        if (railMovement != null)
+        if (railController != null)
         {
-            Debug.Log("[CombatZone] Zona despejada: reanudando movimiento");
-            railMovement.StartMoving();
+            Debug.Log("[CombatZone] Zona despejada (simulada), reanudando movimiento...");
+            railController.StartMoving();
+            cleared = true;
         }
+    }
 
-        playerInside = false;
-        zoneCleared = false;
+    public void ClearZone()
+    {
+        if (cleared) return;
+        cleared = true;
+
+        if (railController != null)
+            railController.StartMoving();
     }
 }
