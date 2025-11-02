@@ -7,7 +7,6 @@ public class RailMovementController : MonoBehaviour
     public CinemachineSplineCart splineCart;
 
     public float speed = 5f;
-
     public bool loop = false;
 
     bool isMoving = true;
@@ -21,8 +20,7 @@ public class RailMovementController : MonoBehaviour
     void Update()
     {
         if (!isMoving || Time.timeScale == 0f) return;
-        if (splineCart == null) return;
-        if (splineCart.Spline == null) return;
+        if (splineCart == null || splineCart.Spline == null) return;
 
         float splineLength = splineCart.Spline.CalculateLength();
 
@@ -32,16 +30,10 @@ public class RailMovementController : MonoBehaviour
             delta = speed * Time.deltaTime;
             splineCart.SplinePosition += delta;
         }
-        else if (splineCart.PositionUnits == PathIndexUnit.Normalized)
+        else
         {
             float speedNormalized = (splineLength > 0f) ? speed / splineLength : speed;
             delta = speedNormalized * Time.deltaTime;
-            splineCart.SplinePosition += delta;
-        }
-        else
-        {
-            float speedNormalized2 = (splineLength > 0f) ? speed / splineLength : speed;
-            delta = speedNormalized2 * Time.deltaTime;
             splineCart.SplinePosition += delta;
         }
 
@@ -49,9 +41,7 @@ public class RailMovementController : MonoBehaviour
         if (splineCart.SplinePosition >= maxPos)
         {
             if (loop)
-            {
                 splineCart.SplinePosition = 0f + (splineCart.SplinePosition - maxPos);
-            }
             else
             {
                 splineCart.SplinePosition = maxPos;
