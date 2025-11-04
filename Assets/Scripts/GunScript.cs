@@ -19,10 +19,14 @@ public class GunScript : MonoBehaviour
     [HideInInspector] public bool isReloading = false;
     public PlayerCover playerCover;
 
+    public PlayerHealthManager playerHealthManager;
+
     void Start()
     {
         currentAmmo = maxAmmo;
         UpdateAmmoUI();
+
+        GetComponent<PlayerHealthManager>();
     }
 
     void Update()
@@ -34,6 +38,8 @@ public class GunScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && Time.time >= FireTime)
         {
+            playerHealthManager.DamageTaken();
+
             if (currentAmmo <= 0)
             {
                 Debug.Log("Reload");

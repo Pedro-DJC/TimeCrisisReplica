@@ -1,18 +1,18 @@
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class PlayerCover : MonoBehaviour
 {
-    public GunScript gunScript;
-
-    private KeyCode coverKey = KeyCode.Space;
-
-    public float coverY;
-
-    public float reloadTime = 1f;
-
     [HideInInspector] public bool isCovering = false;
+    private KeyCode coverKey = KeyCode.Space;
     private float originalY;
     private float coverEndTime = 0f;
+    public PostprocessManager postProcessManager;
+    public GunScript gunScript;
+    public float coverY;
+    public float reloadTime = 1f;
+
+    PlayerHealthManager healthManager;
 
     void Start()
     {
@@ -35,11 +35,23 @@ public class PlayerCover : MonoBehaviour
             if (Time.time >= coverEndTime)
                 transform.localPosition = new Vector3(transform.localPosition.x, originalY, transform.localPosition.z);
         }
+
+        if (isCovering == true)
+        {
+            CrouchVignetteFx(true);
+        }
+
+        if (isCovering == false)
+        {
+            UncrouchVignette(true);
+        }
     }
 
     private System.Collections.IEnumerator CoverAndReload()
     {
+
         isCovering = true;
+
         coverEndTime = Time.time + reloadTime;
 
         if (gunScript != null)
@@ -51,7 +63,19 @@ public class PlayerCover : MonoBehaviour
         {
             yield return null;
         }
-
         isCovering = false;
+        Debug.Log(isCovering);
+    }
+
+    private void CrouchVignetteFx(bool crouching)
+    {
+        float vignetteIntensity = crouching ? 0.5f : 0.3f;
+        postProcessManager. CrouchVignette(Color.black, vignetteIntensity, 0.1f, 0);
+    }
+
+    private void UncrouchVignette(bool standing)
+    {
+        float vignetteIntensity = standing ? 0.3f : 0.5f;
+        postProcessManager.CrouchVignette(Color.black, vignetteIntensity, 0.1f, 0);
     }
 }
