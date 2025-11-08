@@ -47368,6 +47368,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 1
+  combatZone: {fileID: 2083057844}
   agent: {fileID: 758740894}
   enemyCover: 0
   enemyAlive: 1
@@ -54098,14 +54099,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec020250e387bc94ba78e648da64293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railController: {fileID: 556011122}
-  autoAdvanceOnClear: 1
-  checkDelay: 1.5
   enemies:
   - {fileID: 1819051895}
   - {fileID: 2133021969}
   - {fileID: 1877301776}
-  zoneCleared: 0
+  railController: {fileID: 556011122}
+  autoAdvanceOnClear: 1
 --- !u!1 &872686657
 GameObject:
   m_ObjectHideFlags: 0
@@ -54245,6 +54244,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 0
+  combatZone: {fileID: 869765099}
   agent: {fileID: 873282353}
   enemyCover: 0
   enemyAlive: 1
@@ -59856,6 +59856,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 2
+  combatZone: {fileID: 1472686273}
   agent: {fileID: 963191969}
   enemyCover: 0
   enemyAlive: 1
@@ -73265,6 +73266,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 2
+  combatZone: {fileID: 1472686273}
   agent: {fileID: 1193230155}
   enemyCover: 0
   enemyAlive: 1
@@ -80057,6 +80059,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 0
+  combatZone: {fileID: 2083057844}
   agent: {fileID: 1299235727}
   enemyCover: 0
   enemyAlive: 1
@@ -82467,6 +82470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 1115695165}
   canvas: {fileID: 1796310865}
+  mainCamera: {fileID: 0}
 --- !u!4 &1326590365
 Transform:
   m_ObjectHideFlags: 0
@@ -91836,13 +91840,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec020250e387bc94ba78e648da64293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railController: {fileID: 556011122}
-  autoAdvanceOnClear: 1
-  checkDelay: 1
   enemies:
   - {fileID: 166084310}
   - {fileID: 1415546578}
-  zoneCleared: 0
+  railController: {fileID: 556011122}
+  autoAdvanceOnClear: 1
 --- !u!1 &1474754410
 GameObject:
   m_ObjectHideFlags: 0
@@ -101750,6 +101752,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 3
+  combatZone: {fileID: 2083057844}
   agent: {fileID: 1625128898}
   enemyCover: 0
   enemyAlive: 1
@@ -102711,6 +102714,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 0
+  combatZone: {fileID: 869765099}
   agent: {fileID: 1640864940}
   enemyCover: 0
   enemyAlive: 1
@@ -110852,11 +110856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec020250e387bc94ba78e648da64293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  checkDelay: 1.5
-  enemies: []
-  zoneCleared: 0
 --- !u!1 &1782076586
 GameObject:
   m_ObjectHideFlags: 0
@@ -112581,6 +112583,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 1
   enemyType: 2
+  combatZone: {fileID: 2129000478}
   agent: {fileID: 1808659798}
   enemyCover: 0
   enemyAlive: 1
@@ -120593,6 +120596,7 @@ MonoBehaviour:
   targetPoint: 0
   waitTime: 2
   enemyType: 0
+  combatZone: {fileID: 869765099}
   agent: {fileID: 1929817590}
   enemyCover: 0
   enemyAlive: 1
@@ -132161,14 +132165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec020250e387bc94ba78e648da64293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railController: {fileID: 556011122}
-  autoAdvanceOnClear: 1
-  checkDelay: 1.5
   enemies:
   - {fileID: 193595845}
   - {fileID: 1937648020}
   - {fileID: 1544066316}
-  zoneCleared: 0
+  railController: {fileID: 556011122}
+  autoAdvanceOnClear: 1
 --- !u!1 &2083271873
 GameObject:
   m_ObjectHideFlags: 0
@@ -132324,7 +132326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7279950600446862477, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: -0.091
       objectReference: {fileID: 0}
     - target: {fileID: 7279950600446862477, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
       propertyPath: m_LocalPosition.z
@@ -132357,6 +132359,18 @@ PrefabInstance:
     - target: {fileID: 7279950600446862477, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054807205750503360, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054807205750503360, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054807205750503360, guid: 165e4f2c28061d74a931cb7c38584c01, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.49
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -134327,12 +134341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec020250e387bc94ba78e648da64293f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railController: {fileID: 556011122}
-  autoAdvanceOnClear: 1
-  checkDelay: 1.5
   enemies:
   - {fileID: 1415768821}
-  zoneCleared: 0
+  railController: {fileID: 556011122}
+  autoAdvanceOnClear: 1
 --- !u!1 &2131858390
 GameObject:
   m_ObjectHideFlags: 0

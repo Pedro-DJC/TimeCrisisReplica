@@ -3,70 +3,83 @@ using UnityEngine;
 
 public class CombatZones : MonoBehaviour
 {
-    public RailMovementController railController;
-    public bool autoAdvanceOnClear = true;
-    public float checkDelay = 1.5f;
-
     public List<GameObject> enemies = new List<GameObject>();
 
-    private bool playerInZone = false;
-    public bool zoneCleared = false;
+    public RailMovementController railController;
 
-    void Start()
-    {
-        foreach (var enemy in enemies)
-        {
-            if (enemy != null)
-                enemy.SetActive(false);
-        }
-    }
+    public bool autoAdvanceOnClear = true;
 
-    void OnTriggerEnter(Collider other)
+    private bool zoneCleared = false;
+    private bool playerInside = false;
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !playerInZone)
+        if (other.CompareTag("Player"))
         {
-            playerInZone = true;
-            Debug.Log("[CombatZone] Jugador entró a la zona: DETENIENDO carrito y activando enemigos");
+            Debug.Log("[CombatZone] Jugador entró a la zona");
+            playerInside = true;
 
             if (railController != null)
                 railController.StopMoving();
 
-            ActivateEnemies();
-            InvokeRepeating(nameof(CheckEnemiesStatus), checkDelay, checkDelay);
+            ActivateEnemies(true);
         }
     }
 
-    void ActivateEnemies()
+    private void OnTriggerExit(Collider other)
     {
-        foreach (var enemy in enemies)
+        if (other.CompareTag("Player"))
         {
-            if (enemy != null)
-                enemy.SetActive(true);
+            Debug.Log("[CombatZone] Jugador salió de la zona");
+            playerInside = false;
         }
     }
 
-    void CheckEnemiesStatus()
+    public void ActivateEnemies(bool state)
     {
-        if (zoneCleared) return;
-        bool allDead = true;
         foreach (var enemy in enemies)
         {
-            if (enemy != null && enemy.activeInHierarchy)
+            if (enemy == null) continue;
+
+            var enemyPatrol = enemy.GetComponent<EnemyPatrol>();
+
+            if (state)
             {
-                allDead = false;
-                break;
+                if (enemyPatrol != null && enemyPatrol.enemyAlive)
+                    enemy.SetActive(true);
+            }
+            else
+            {
+                enemy.SetActive(false);
             }
         }
+    }
 
-        if (allDead)
+    public void NotifyEnemyKilled(GameObject enemy)
+    {
+        enemies.RemoveAll(e => e == null);
+
+        if (enemies.Contains(enemy))
+        {
+            enemies.Remove(enemy);
+            Debug.Log("[CombatZone] Enemigo eliminado. Restantes: " + enemies.Count);
+        }
+
+        if (enemies.Count == 0 && !zoneCleared)
         {
             zoneCleared = true;
-            Debug.Log("[CombatZone] Zona despejada. Avanzando al siguiente punto...");
-
-            CancelInvoke(nameof(CheckEnemiesStatus));
+            Debug.Log("[CombatZone] Zona despejada");
 
             if (autoAdvanceOnClear && railController != null)
+            {
+                Debug.Log("[CombatZone] Avanzando...");
                 railController.StartMoving();
+            }
         }
+    }
+    public void ResetZone()
+    {
+        zoneCleared = false;
+        playerInside = false;
     }
 }

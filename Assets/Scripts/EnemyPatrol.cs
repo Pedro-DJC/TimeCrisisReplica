@@ -12,6 +12,7 @@ public class EnemyPatrol : MonoBehaviour
     public int targetPoint = 0;
     public float waitTime = 2f; // segundos de espera en cada punto
     [SerializeField] public int enemyType;
+    public CombatZones combatZone;
     public NavMeshAgent agent;
 
     // Variables internas
@@ -187,6 +188,20 @@ public class EnemyPatrol : MonoBehaviour
             yield return new WaitForSeconds(1f); // Espera unos segundos
 
             yield return ShootingLoop(0);
+        }
+    }
+    public void KillEnemy()
+    {
+        if (!enemyAlive) return;
+
+        enemyAlive = false;
+        Debug.Log("[Enemy] " + gameObject.name + " ha muerto.");
+
+        gameObject.SetActive(false);
+
+        if (combatZone != null)
+        {
+            combatZone.NotifyEnemyKilled(this.gameObject);
         }
     }
 }
