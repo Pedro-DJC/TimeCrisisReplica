@@ -1,28 +1,39 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatZones : MonoBehaviour
 {
+    [Header("Enemigos de esta zona")]
     public List<GameObject> enemies = new List<GameObject>();
 
+    [Header("Control del rail (carrito)")]
     public RailMovementController railController;
 
+    [Header("Avanzar automáticamente al limpiar zona")]
     public bool autoAdvanceOnClear = true;
 
-    private bool zoneCleared = false;
+    public bool zoneCleared = false;
     private bool playerInside = false;
+
+    private void Start()
+    {
+        ActivateEnemies(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("[CombatZone] Jugador entró a la zona");
+            Debug.Log($"[CombatZone] Jugador entró a la zona {gameObject.name}");
             playerInside = true;
 
             if (railController != null)
                 railController.StopMoving();
 
             ActivateEnemies(true);
+
+            DisableOtherZonesEnemies();
         }
     }
 
@@ -30,8 +41,10 @@ public class CombatZones : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("[CombatZone] Jugador salió de la zona");
+            Debug.Log($"[CombatZone] Jugador salió de la zona {gameObject.name}");
             playerInside = false;
+
+            ActivateEnemies(false);
         }
     }
 
@@ -42,16 +55,26 @@ public class CombatZones : MonoBehaviour
             if (enemy == null) continue;
 
             var enemyPatrol = enemy.GetComponent<EnemyPatrol>();
-
             if (state)
             {
-                if (enemyPatrol != null && enemyPatrol.enemyAlive)
+                if (enemyPatrol == null || enemyPatrol.enemyAlive)
                     enemy.SetActive(true);
             }
             else
             {
                 enemy.SetActive(false);
             }
+        }
+    }
+
+    private void DisableOtherZonesEnemies()
+    {
+        CombatZones[] allZones = Object.FindObjectsByType<CombatZones>(FindObjectsSortMode.None);
+
+        foreach (var zone in allZones)
+        {
+            if (zone != this)
+                zone.ActivateEnemies(false);
         }
     }
 
@@ -62,17 +85,17 @@ public class CombatZones : MonoBehaviour
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
-            Debug.Log("[CombatZone] Enemigo eliminado. Restantes: " + enemies.Count);
+            Debug.Log($"[CombatZone] Enemigo eliminado en {gameObject.name}. Restantes: {enemies.Count}");
         }
 
-        if (enemies.Count == 0 && !zoneCleared)
+        if (playerInside && enemies.Count == 0 && !zoneCleared)
         {
             zoneCleared = true;
-            Debug.Log("[CombatZone] Zona despejada");
+            Debug.Log($"[CombatZone] Zona {gameObject.name} despejada.");
 
             if (autoAdvanceOnClear && railController != null)
             {
-                Debug.Log("[CombatZone] Avanzando...");
+                Debug.Log("[CombatZone] Avanzando al siguiente punto...");
                 railController.StartMoving();
             }
         }
@@ -81,5 +104,6 @@ public class CombatZones : MonoBehaviour
     {
         zoneCleared = false;
         playerInside = false;
+        ActivateEnemies(false);
     }
 }
