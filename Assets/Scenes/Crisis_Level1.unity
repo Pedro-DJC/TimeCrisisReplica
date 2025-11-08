@@ -54044,7 +54044,7 @@ GameObject:
   - component: {fileID: 869765097}
   - component: {fileID: 869765098}
   - component: {fileID: 869765099}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Zone1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82470,7 +82470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 1115695165}
   canvas: {fileID: 1796310865}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 2146906974}
 --- !u!4 &1326590365
 Transform:
   m_ObjectHideFlags: 0
@@ -91785,7 +91785,7 @@ GameObject:
   - component: {fileID: 1472686271}
   - component: {fileID: 1472686272}
   - component: {fileID: 1472686273}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Zone4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110801,7 +110801,7 @@ GameObject:
   - component: {fileID: 1781833885}
   - component: {fileID: 1781833886}
   - component: {fileID: 1781833887}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Zone5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132110,7 +132110,7 @@ GameObject:
   - component: {fileID: 2083057842}
   - component: {fileID: 2083057843}
   - component: {fileID: 2083057844}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Zone2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134286,7 +134286,7 @@ GameObject:
   - component: {fileID: 2129000476}
   - component: {fileID: 2129000477}
   - component: {fileID: 2129000478}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Zone3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

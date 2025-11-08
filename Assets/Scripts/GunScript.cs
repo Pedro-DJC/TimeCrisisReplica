@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class GunScript : MonoBehaviour
 {
-    public Transform gunPos;          
+    public Transform gunPos;
     public Camera mainCamera;
 
     public float maxDistance = 1000f;
@@ -21,16 +21,22 @@ public class GunScript : MonoBehaviour
     public PlayerCover playerCover;
     public PlayerHealthManager playerHealthManager;
 
-    // debug
     private Vector3 lastShotOrigin;
     private Vector3 lastShotDirection;
     private Vector3 lastHitPoint;
     private bool hitSomething;
 
+    private int layerMask;
+
     void Start()
     {
         currentAmmo = maxAmmo;
         UpdateAmmoUI();
+
+        // Configurar LayerMask para ignorar "CombatZone"
+        int zoneLayer = LayerMask.NameToLayer("CombatZone");
+        layerMask = ~(1 << zoneLayer);
+        Debug.Log($"[Gun] Ignorando capa CombatZone (layer {zoneLayer})");
     }
 
     void Update()
@@ -65,12 +71,13 @@ public class GunScript : MonoBehaviour
             Debug.Log("Reload");
             return;
         }
+
         currentAmmo--;
         UpdateAmmoUI();
 
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 targetPoint;
-        if (Physics.Raycast(cameraRay, out RaycastHit camHit, maxDistance))
+        if (Physics.Raycast(cameraRay, out RaycastHit camHit, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             targetPoint = camHit.point;
         else
             targetPoint = cameraRay.origin + cameraRay.direction * maxDistance;
@@ -86,14 +93,14 @@ public class GunScript : MonoBehaviour
 
         Debug.Log($"[Gun] origin={origin} biasedOrigin={biasedOrigin} cameraPos={mainCamera.transform.position} targetPoint={targetPoint}");
 
-        if (Physics.Raycast(biasedOrigin, shootDirection, out RaycastHit hitInfo, maxDistance))
+        if (Physics.Raycast(biasedOrigin, shootDirection, out RaycastHit hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
             hitSomething = true;
             lastHitPoint = hitInfo.point;
 
             if (shootAudio != null) shootAudio.Play();
             Debug.DrawLine(biasedOrigin, hitInfo.point, Color.red, 1f);
-            Debug.Log($"[Gun] Hit {hitInfo.collider.name} (tag:{hitInfo.collider.tag})");
+            Debug.Log($"[Gun] Impacto con: {hitInfo.collider.name} (tag: {hitInfo.collider.tag})");
 
             EnemyPatrol enemy = hitInfo.collider.GetComponent<EnemyPatrol>()
                                 ?? hitInfo.collider.GetComponentInParent<EnemyPatrol>()
@@ -101,16 +108,22 @@ public class GunScript : MonoBehaviour
 
             if (enemy != null && enemy.enemyAlive)
             {
+                Debug.Log($"[Gun] Enemigo detectado: {enemy.name}. Eliminando...");
                 enemy.KillEnemy();
             }
             else if (hitInfo.collider.CompareTag("Barrel"))
             {
                 ExplosiveBarrel barrel = hitInfo.collider.GetComponent<ExplosiveBarrel>();
-                if (barrel != null) barrel.OnHit();
+                if (barrel != null)
+                {
+                    Debug.Log("[Gun] Impacto con barril explosivo.");
+                    barrel.OnHit();
+                }
             }
             else
             {
-                // otros impactos
+                string hierarchyPath = hitInfo.collider.transform.GetHierarchyPath();
+                Debug.Log($"[Gun] Impacto sin daño relevante. Objeto: {hitInfo.collider.name} | Path jerárquico: {hierarchyPath}");
             }
         }
         else
@@ -140,7 +153,8 @@ public class GunScript : MonoBehaviour
 
     private void UpdateAmmoUI()
     {
-        if (ammoText != null) ammoText.text = currentAmmo.ToString();
+        if (ammoText != null)
+            ammoText.text = currentAmmo.ToString();
     }
 
     private void OnDrawGizmos()
@@ -158,5 +172,20 @@ public class GunScript : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(lastHitPoint, 0.1f);
         }
+    }
+}
+
+// --- Extensión para imprimir la jerarquía del objeto impactado ---
+public static class TransformExtensions
+{
+    public static string GetHierarchyPath(this Transform transform)
+    {
+        string path = transform.name;
+        while (transform.parent != null)
+        {
+            transform = transform.parent;
+            path = transform.name + "/" + path;
+        }
+        return path;
     }
 }
