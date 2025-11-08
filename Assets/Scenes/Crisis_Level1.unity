@@ -54059,8 +54059,8 @@ Transform:
   m_GameObject: {fileID: 869765096}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.97, y: 1.08, z: 4.49}
-  m_LocalScale: {x: 19.885216, y: 7, z: 8.85995}
+  m_LocalPosition: {x: -0.97, y: 1.08, z: 5.12}
+  m_LocalScale: {x: 19.885216, y: 7, z: 10.418415}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393178815}
@@ -54100,7 +54100,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  autoAdvanceDelay: 3
+  checkDelay: 1.5
+  enemies:
+  - {fileID: 1819051895}
+  - {fileID: 2133021969}
+  - {fileID: 1877301776}
+  zoneCleared: 0
 --- !u!1 &872686657
 GameObject:
   m_ObjectHideFlags: 0
@@ -91792,8 +91797,8 @@ Transform:
   m_GameObject: {fileID: 1472686270}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.52, y: 0, z: 51.2}
-  m_LocalScale: {x: 6.2745805, y: 1, z: 15.983529}
+  m_LocalPosition: {x: 13.85, y: 1.37, z: 51.2}
+  m_LocalScale: {x: 6.2745805, y: 3.8521, z: 15.983529}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393178815}
@@ -91833,7 +91838,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  autoAdvanceDelay: 3
+  checkDelay: 1
+  enemies:
+  - {fileID: 166084310}
+  - {fileID: 1415546578}
+  zoneCleared: 0
 --- !u!1 &1474754410
 GameObject:
   m_ObjectHideFlags: 0
@@ -110804,8 +110813,8 @@ Transform:
   m_GameObject: {fileID: 1781833884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.11, y: 0, z: 68.66}
-  m_LocalScale: {x: 11.550248, y: 1, z: 15.983529}
+  m_LocalPosition: {x: 16.44, y: 3.82, z: 68.66}
+  m_LocalScale: {x: 11.550248, y: 8.7719, z: 15.983529}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393178815}
@@ -110845,7 +110854,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  autoAdvanceDelay: 3
+  checkDelay: 1.5
+  enemies: []
+  zoneCleared: 0
 --- !u!1 &1782076586
 GameObject:
   m_ObjectHideFlags: 0
@@ -132111,8 +132122,8 @@ Transform:
   m_GameObject: {fileID: 2083057841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 0, z: 21.76}
-  m_LocalScale: {x: 19.885216, y: 1, z: 18.029112}
+  m_LocalPosition: {x: -0.31, y: 1.23, z: 22.82}
+  m_LocalScale: {x: 19.885216, y: 4.8187, z: 18.029112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393178815}
@@ -132152,7 +132163,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  autoAdvanceDelay: 3
+  checkDelay: 1.5
+  enemies:
+  - {fileID: 193595845}
+  - {fileID: 1937648020}
+  - {fileID: 1544066316}
+  zoneCleared: 0
 --- !u!1 &2083271873
 GameObject:
   m_ObjectHideFlags: 0
@@ -134272,8 +134288,8 @@ Transform:
   m_GameObject: {fileID: 2129000475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9, y: 0, z: 42.14}
-  m_LocalScale: {x: 19.885216, y: 1, z: 18.029112}
+  m_LocalPosition: {x: 2.9, y: 1.24, z: 42.14}
+  m_LocalScale: {x: 19.885216, y: 3.4948, z: 18.029112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393178815}
@@ -134313,7 +134329,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railController: {fileID: 556011122}
   autoAdvanceOnClear: 1
-  autoAdvanceDelay: 3
+  checkDelay: 1.5
+  enemies:
+  - {fileID: 1415768821}
+  zoneCleared: 0
 --- !u!1 &2131858390
 GameObject:
   m_ObjectHideFlags: 0
