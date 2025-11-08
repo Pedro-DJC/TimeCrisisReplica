@@ -1,45 +1,100 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatZones : MonoBehaviour
 {
+    [Header("Control de zona")]
     public RailMovementController railController;
     public bool autoAdvanceOnClear = true;
-    public float autoAdvanceDelay = 3f;
 
-    private bool playerInZone = false;
-    private bool cleared = false;
+    public bool zoneCleared = false;
+    private bool playerInside = false;
 
-    void OnTriggerEnter(Collider other)
+    private List<EnemyPatrol> enemies = new List<EnemyPatrol>();
+
+    private void Awake()
     {
-        if (other.CompareTag("Player") && !playerInZone)
+        enemies = new List<EnemyPatrol>(GetComponentsInChildren<EnemyPatrol>(true));
+
+        foreach (var enemy in enemies)
         {
-            playerInZone = true;
-            Debug.Log("[CombatZone] Jugador entró a la zona: DETENIENDO carrito");
+            if (enemy == null) continue;
+            enemy.gameObject.SetActive(false);
+            enemy.currentZone = this;
+        }
 
-            if (railController != null)
-                railController.StopMoving();
+        Debug.Log($"[CombatZone] {name} detectó {enemies.Count} enemigos hijos.");
+    }
 
-            if (autoAdvanceOnClear)
-                Invoke(nameof(AutoAdvance), autoAdvanceDelay);
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        Debug.Log($"[CombatZone] Jugador entró a {name}");
+        playerInside = true;
+
+        if (railController != null)
+        {
+            railController.StopMoving();
+            Debug.Log("[CombatZone] Carro detenido");
+        }
+
+        ActivateEnemies(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log($"[CombatZone] Jugador salió de {name}");
+            playerInside = false;
         }
     }
 
-    void AutoAdvance()
+    public void ActivateEnemies(bool state)
     {
-        if (railController != null)
+        foreach (var enemy in enemies)
         {
-            Debug.Log("[CombatZone] Zona despejada (simulada), reanudando movimiento...");
-            railController.StartMoving();
-            cleared = true;
+            if (enemy == null) continue;
+            enemy.gameObject.SetActive(state);
+            if (state)
+            {
+                enemy.enemyAlive = true;
+                enemy.currentZone = this;
+            }
         }
     }
 
-    public void ClearZone()
+    public void NotifyEnemyKilled(GameObject enemyGO)
     {
-        if (cleared) return;
-        cleared = true;
+        enemies.RemoveAll(e => e == null);
 
-        if (railController != null)
-            railController.StartMoving();
+        var enemyToRemove = enemies.Find(e => e != null && e.gameObject == enemyGO);
+        if (enemyToRemove != null)
+        {
+            enemies.Remove(enemyToRemove);
+        }
+
+        int aliveCount = 0;
+        foreach (var e in enemies)
+        {
+            if (e != null && e.gameObject.activeSelf)
+                aliveCount++;
+        }
+
+        Debug.Log($"[CombatZone] {enemyGO.name} eliminado. Restantes: {aliveCount}");
+
+        if (aliveCount <= 0 && !zoneCleared)
+        {
+            zoneCleared = true;
+            Debug.Log($"[CombatZone] Zona {name} despejada completamente, avanzando...");
+
+            if (autoAdvanceOnClear && railController != null)
+            {
+                Debug.Log("[CombatZone] Llamando a StartMoving()");
+                railController.StartMoving();
+            }
+        }
     }
 }

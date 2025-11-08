@@ -15,111 +15,177 @@ public class GunScript : MonoBehaviour
     public int maxAmmo = 6;
     public int currentAmmo;
 
-    private float FireTime = 0;
+    private float FireTime = 0f;
+    private bool fireRequested = false;
     [HideInInspector] public bool isReloading = false;
     public PlayerCover playerCover;
-
     public PlayerHealthManager playerHealthManager;
+
+    private Vector3 lastShotOrigin;
+    private Vector3 lastShotDirection;
+    private Vector3 lastHitPoint;
+    private bool hitSomething;
+
+    private int layerMask;
 
     void Start()
     {
         currentAmmo = maxAmmo;
         UpdateAmmoUI();
 
-        GetComponent<PlayerHealthManager>();
+        // Configurar LayerMask para ignorar "CombatZone"
+        int zoneLayer = LayerMask.NameToLayer("CombatZone");
+        layerMask = ~(1 << zoneLayer);
+        Debug.Log($"[Gun] Ignorando capa CombatZone (layer {zoneLayer})");
     }
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            fireRequested = true;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (fireRequested)
+        {
+            fireRequested = false;
+            TryFire();
+        }
+    }
+
+    void TryFire()
+    {
         if (isReloading || (playerCover != null && playerCover.isCovering))
             return;
 
+        if (Time.time < FireTime)
+            return;
+
+        FireTime = Time.time + fireRate;
+
+        if (currentAmmo <= 0)
+        {
+            Debug.Log("Reload");
+            return;
+        }
+
+        currentAmmo--;
         UpdateAmmoUI();
 
-        if (Input.GetMouseButtonDown(0) && Time.time >= FireTime)
+        Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Vector3 targetPoint;
+        if (Physics.Raycast(cameraRay, out RaycastHit camHit, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
+            targetPoint = camHit.point;
+        else
+            targetPoint = cameraRay.origin + cameraRay.direction * maxDistance;
+
+        Vector3 origin = gunPos.position;
+        Vector3 shootDirection = (targetPoint - origin).normalized;
+
+        float originBias = 0.05f;
+        Vector3 biasedOrigin = origin + shootDirection * originBias;
+
+        lastShotOrigin = biasedOrigin;
+        lastShotDirection = shootDirection;
+
+        Debug.Log($"[Gun] origin={origin} biasedOrigin={biasedOrigin} cameraPos={mainCamera.transform.position} targetPoint={targetPoint}");
+
+        if (Physics.Raycast(biasedOrigin, shootDirection, out RaycastHit hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
         {
-            playerHealthManager.DamageTaken();
+            hitSomething = true;
+            lastHitPoint = hitInfo.point;
 
-            if (currentAmmo <= 0)
+            if (shootAudio != null) shootAudio.Play();
+            Debug.DrawLine(biasedOrigin, hitInfo.point, Color.red, 1f);
+            Debug.Log($"[Gun] Impacto con: {hitInfo.collider.name} (tag: {hitInfo.collider.tag})");
+
+            EnemyPatrol enemy = hitInfo.collider.GetComponent<EnemyPatrol>()
+                                ?? hitInfo.collider.GetComponentInParent<EnemyPatrol>()
+                                ?? hitInfo.collider.GetComponentInChildren<EnemyPatrol>();
+
+            if (enemy != null && enemy.enemyAlive)
             {
-                Debug.Log("Reload");
-                return;
+                Debug.Log($"[Gun] Enemigo detectado: {enemy.name}. Eliminando...");
+                enemy.KillEnemy();
             }
-
-            FireTime = Time.time + fireRate;
-            currentAmmo--;
-
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            Vector3 targetPoint;
-            if (Physics.Raycast(ray, out RaycastHit camHit, maxDistance))
+            else if (hitInfo.collider.CompareTag("Barrel"))
             {
-                targetPoint = camHit.point;
-            }
-            else
-            {
-                targetPoint = ray.origin + ray.direction * maxDistance;
-            }
-
-            Vector3 shootDirection = (targetPoint - gunPos.position).normalized;
-
-            if (Physics.Raycast(gunPos.position, shootDirection, out RaycastHit hitInfo, maxDistance))
-            {
-                Debug.DrawLine(gunPos.position, hitInfo.point, Color.red, 1f);
-                if (shootAudio != null)
-                    shootAudio.Play();
-
-                if (hitInfo.collider.CompareTag("Enemy"))
+                ExplosiveBarrel barrel = hitInfo.collider.GetComponent<ExplosiveBarrel>();
+                if (barrel != null)
                 {
-                    Debug.Log("Enemy hit " + hitInfo.collider.name);
-                    //Hitinfo para poder saber a que tipo de enemigo se le disparo
-                }
-                else if (hitInfo.collider.CompareTag("Box"))
-                {
-                    Debug.Log("Box hit");
-                }
-                else if (hitInfo.collider.CompareTag("Barrel"))
-                {
-                    ExplosiveBarrel barrel = hitInfo.collider.GetComponent<ExplosiveBarrel>();
-                    if (barrel != null)
-                    {
-                        barrel.OnHit();
-                    }
-
-                    Debug.Log("Barrel");
+                    Debug.Log("[Gun] Impacto con barril explosivo.");
+                    barrel.OnHit();
                 }
             }
             else
             {
-                Debug.DrawRay(gunPos.position, shootDirection * maxDistance, Color.yellow, 1f);
-                if (shootAudio != null)
-                    shootAudio.Play();
-                Debug.Log("No hit");
+                string hierarchyPath = hitInfo.collider.transform.GetHierarchyPath();
+                Debug.Log($"[Gun] Impacto sin daño relevante. Objeto: {hitInfo.collider.name} | Path jerárquico: {hierarchyPath}");
             }
         }
+        else
+        {
+            hitSomething = false;
+            if (shootAudio != null) shootAudio.Play();
+            Debug.DrawRay(biasedOrigin, shootDirection * maxDistance, Color.yellow, 1f);
+            Debug.Log("[Gun] No hit");
+        }
     }
+
     public void Reload()
     {
-        if (!isReloading)
-            StartCoroutine(ReloadCoroutine());
+        if (!isReloading) StartCoroutine(ReloadCoroutine());
     }
 
     private System.Collections.IEnumerator ReloadCoroutine()
     {
         isReloading = true;
-
-        Debug.Log(" Reloading...");
-
+        Debug.Log("Reloading...");
         yield return new WaitForSeconds(1f);
-
         currentAmmo = maxAmmo;
         isReloading = false;
         UpdateAmmoUI();
-
         Debug.Log("Reload complete");
     }
+
     private void UpdateAmmoUI()
     {
         if (ammoText != null)
             ammoText.text = currentAmmo.ToString();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(lastShotOrigin, 0.05f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(lastShotOrigin, lastShotDirection * 10f);
+
+        if (hitSomething)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(lastHitPoint, 0.1f);
+        }
+    }
+}
+
+// --- Extensión para imprimir la jerarquía del objeto impactado ---
+public static class TransformExtensions
+{
+    public static string GetHierarchyPath(this Transform transform)
+    {
+        string path = transform.name;
+        while (transform.parent != null)
+        {
+            transform = transform.parent;
+            path = transform.name + "/" + path;
+        }
+        return path;
     }
 }

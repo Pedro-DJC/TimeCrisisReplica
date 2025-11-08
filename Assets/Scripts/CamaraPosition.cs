@@ -6,7 +6,7 @@ public class CamaraPosition : MonoBehaviour
     public Transform player;
 
     [Header("Offset Player")]
-    public Vector3 offset = new Vector3(0, 1.5f, -3f);
+    public Vector3 offset = new Vector3(0, 0, 0);
 
     [Header("Smooth")]
     [Range(0, 1)] public float smoothSpeed = 0.125f;

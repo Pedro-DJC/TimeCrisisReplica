@@ -10,7 +10,7 @@ public class RailMovementController : MonoBehaviour
     public float speed = 5f;
     public bool loop = false;
 
-    bool isMoving = true;
+    private bool isMoving = true;
 
     void Start()
     {
@@ -50,6 +50,7 @@ public class RailMovementController : MonoBehaviour
             }
         }
     }
+
     public void MoveToPosition(float targetPosition)
     {
         StartCoroutine(MoveToPositionCoroutine(targetPosition));
@@ -71,7 +72,28 @@ public class RailMovementController : MonoBehaviour
         splineCart.SplinePosition = target;
         StopMoving();
     }
-    public void StartMoving() => isMoving = true;
-    public void StopMoving() => isMoving = false;
+
+    public void StartMoving()
+    {
+        if (!loop)
+        {
+            float maxPos = (splineCart.PositionUnits == PathIndexUnit.Distance)
+                ? splineCart.Spline.CalculateLength()
+                : 1f;
+
+            if (splineCart.SplinePosition >= maxPos)
+                splineCart.SplinePosition = Mathf.Max(0f, maxPos - 0.05f);
+        }
+
+        isMoving = true;
+        Debug.Log("[Rail] StartMoving() ejecutado");
+    }
+
+    public void StopMoving()
+    {
+        isMoving = false;
+        Debug.Log("[Rail] StopMoving() ejecutado");
+    }
+
     public void SetSpeed(float s) => speed = s;
 }

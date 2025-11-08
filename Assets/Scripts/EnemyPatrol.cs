@@ -12,16 +12,46 @@ public class EnemyPatrol : MonoBehaviour
     public int targetPoint = 0;
     public float waitTime = 2f; // segundos de espera en cada punto
     [SerializeField] public int enemyType;
+    public CombatZones combatZone;
     public NavMeshAgent agent;
 
     // Variables internas
     public bool enemyCover = false;
+
     public bool enemyAlive = true;
+    public int health = 100;
+
     int warningShots = 0;
+    private int currentPoint = 0;
+
+    [Header("Zona asignada")]
+    public CombatZones currentZone;
+
+    private void OnEnable()
+    {
+        enemyAlive = true;
+        health = 100;
+
+        if (agent != null && patrolPoints.Length > 0)
+            agent.SetDestination(patrolPoints[currentPoint].position);
+    }
 
     void Start()
     {
-        agent.SetDestination(patrolPoints[targetPoint].position);
+        if (agent != null && patrolPoints.Length > 0)
+        {
+            agent.SetDestination(patrolPoints[currentPoint].position);
+        }
+    }
+    private void Update()
+    {
+        if (!enemyAlive || agent == null || patrolPoints.Length == 0) return;
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentPoint = (currentPoint + 1) % patrolPoints.Length;
+            agent.SetDestination(patrolPoints[currentPoint].position);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -188,5 +218,33 @@ public class EnemyPatrol : MonoBehaviour
 
             yield return ShootingLoop(0);
         }
+    }
+    public void TakeDamage(int amount)
+    {
+        if (!enemyAlive) return;
+
+        health -= amount;
+        if (health <= 0)
+        {
+            KillEnemy();
+        }
+    }
+    public void KillEnemy()
+    {
+        if (!enemyAlive) return;
+        enemyAlive = false;
+        Debug.Log($"[EnemyPatrol] {name} murió.");
+
+        if (currentZone != null)
+        {
+            Debug.Log($"[EnemyPatrol] Notificando muerte a zona: {currentZone.name}");
+            currentZone.NotifyEnemyKilled(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning($"[EnemyPatrol] {name} no tiene zona asignada.");
+        }
+
+        gameObject.SetActive(false);
     }
 }
