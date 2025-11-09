@@ -10,7 +10,7 @@ public class EnemyPatrol : MonoBehaviour
     // Variables desde el inspector
     public Transform[] patrolPoints;
     public int targetPoint = 0;
-    public float waitTime = 2f; // segundos de espera en cada punto
+    public float waitTime = 4f; // segundos de espera en cada punto
     [SerializeField] public int enemyType;
     public CombatZones combatZone;
     public NavMeshAgent agent;
@@ -187,7 +187,7 @@ public class EnemyPatrol : MonoBehaviour
 
     IEnumerator WaitAndMoveNext(int type)
     {
-        if (targetPoint == 0)
+        if (targetPoint < 1)
         {
             Debug.Log("Waiting");
             yield return new WaitForSeconds(waitTime); // Espera unos segundos
