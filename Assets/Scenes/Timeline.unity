@@ -10518,7 +10518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &196769706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53500,7 +53500,6 @@ GameObject:
   - component: {fileID: 852755668}
   - component: {fileID: 852755667}
   - component: {fileID: 852755669}
-  - component: {fileID: 852755670}
   m_Layer: 0
   m_Name: TimelineHolder
   m_TagString: Untagged
@@ -53578,33 +53577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playableDirector: {fileID: 852755667}
-  playerMesh: {fileID: 77325606}
   skipKey: 108
---- !u!114 &852755670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 852755666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 255f081fa2ccdef44a4f01ca908c8a05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  director: {fileID: 852755667}
-  mainVCam: {fileID: 0}
-  timelineVCams:
-  - {fileID: 272867594}
-  - {fileID: 2089678893}
-  - {fileID: 597782715}
-  - {fileID: 1371415606}
-  - {fileID: 1250219224}
-  - {fileID: 38512395}
-  - {fileID: 1563818763}
-  - {fileID: 795252988}
-  - {fileID: 1260414180}
-  - {fileID: 1620571858}
 --- !u!1 &854656406
 GameObject:
   m_ObjectHideFlags: 0
@@ -68343,7 +68316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1115695165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79666,7 +79639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1285981090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125405,7 +125378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1987348224
 RectTransform:
   m_ObjectHideFlags: 0

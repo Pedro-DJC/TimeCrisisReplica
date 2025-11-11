@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.Playables;//Importar PlayableDirector
 using DG.Tweening;
-using UnityEngine.UI; //Importar UI
+using UnityEngine.UI;
+using UnityEngine.SceneManagement; //Importar UI
 
 
 public class TimelineManager : MonoBehaviour
 {
     public PlayableDirector playableDirector;
     //public Image timelineFader;
-    public Transform playerMesh;
+    //public Transform playerMesh;
     public KeyCode skipKey;
     private float fadeDuration = 1;
     private float timelineDuration;
@@ -36,7 +37,8 @@ public class TimelineManager : MonoBehaviour
 
     public void TimelineEnd()
     {
-        playerMesh.localPosition = Vector3.zero;
+        SceneManager.LoadScene("Crisis_Level1");
+        //playerMesh.localPosition = Vector3.zero;
         //timelineFader.DOFade(0, fadeDuration);
     }
 }
