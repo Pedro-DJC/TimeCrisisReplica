@@ -40508,8 +40508,10 @@ GameObject:
   - component: {fileID: 758740895}
   - component: {fileID: 758740894}
   - component: {fileID: 758740893}
+  - component: {fileID: 758740899}
+  - component: {fileID: 758740898}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40606,6 +40608,8 @@ MonoBehaviour:
   enemyType: 1
   combatZone: {fileID: 2083057844}
   agent: {fileID: 758740894}
+  animationScript: {fileID: 758740898}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -40633,6 +40637,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &758740898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758740891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &758740899
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758740891}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &759507870
 GameObject:
   m_ObjectHideFlags: 0
@@ -46272,8 +46311,10 @@ GameObject:
   - component: {fileID: 873282354}
   - component: {fileID: 873282353}
   - component: {fileID: 873282352}
+  - component: {fileID: 873282356}
+  - component: {fileID: 873282357}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46369,6 +46410,8 @@ MonoBehaviour:
   enemyType: 0
   combatZone: {fileID: 869765099}
   agent: {fileID: 873282353}
+  animationScript: {fileID: 873282357}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -46396,6 +46439,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!95 &873282356
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873282350}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &873282357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873282350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
 --- !u!1 &874751246
 GameObject:
   m_ObjectHideFlags: 0
@@ -51232,8 +51310,10 @@ GameObject:
   - component: {fileID: 963191970}
   - component: {fileID: 963191969}
   - component: {fileID: 963191968}
+  - component: {fileID: 963191973}
+  - component: {fileID: 963191972}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy7
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51329,6 +51409,8 @@ MonoBehaviour:
   enemyType: 2
   combatZone: {fileID: 1472686273}
   agent: {fileID: 963191969}
+  animationScript: {fileID: 963191972}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -51356,6 +51438,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &963191972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963191966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &963191973
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963191966}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &963285332
 GameObject:
   m_ObjectHideFlags: 0
@@ -63443,8 +63560,10 @@ GameObject:
   - component: {fileID: 1193230156}
   - component: {fileID: 1193230155}
   - component: {fileID: 1193230154}
+  - component: {fileID: 1193230159}
+  - component: {fileID: 1193230158}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy8
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63540,6 +63659,8 @@ MonoBehaviour:
   enemyType: 2
   combatZone: {fileID: 1472686273}
   agent: {fileID: 1193230155}
+  animationScript: {fileID: 1193230158}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -63567,6 +63688,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1193230158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193230152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &1193230159
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193230152}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1194344243
 GameObject:
   m_ObjectHideFlags: 0
@@ -69475,8 +69631,10 @@ GameObject:
   - component: {fileID: 1299235728}
   - component: {fileID: 1299235727}
   - component: {fileID: 1299235726}
+  - component: {fileID: 1299235732}
+  - component: {fileID: 1299235731}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy5
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69572,6 +69730,8 @@ MonoBehaviour:
   enemyType: 0
   combatZone: {fileID: 2083057844}
   agent: {fileID: 1299235727}
+  animationScript: {fileID: 1299235731}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -69599,6 +69759,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1299235731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299235724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &1299235732
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299235724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1300305588
 GameObject:
   m_ObjectHideFlags: 0
@@ -87441,8 +87636,10 @@ GameObject:
   - component: {fileID: 1625128899}
   - component: {fileID: 1625128898}
   - component: {fileID: 1625128897}
+  - component: {fileID: 1625128903}
+  - component: {fileID: 1625128902}
   m_Layer: 11
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy4
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87539,6 +87736,8 @@ MonoBehaviour:
   enemyType: 3
   combatZone: {fileID: 2083057844}
   agent: {fileID: 1625128898}
+  animationScript: {fileID: 1625128902}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -87566,6 +87765,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1625128902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625128895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &1625128903
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625128895}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1629029484
 GameObject:
   m_ObjectHideFlags: 0
@@ -88297,6 +88531,8 @@ GameObject:
   - component: {fileID: 1640864941}
   - component: {fileID: 1640864940}
   - component: {fileID: 1640864939}
+  - component: {fileID: 1640864943}
+  - component: {fileID: 1640864944}
   m_Layer: 6
   m_Name: BaseEnemy1
   m_TagString: Enemy
@@ -88394,6 +88630,8 @@ MonoBehaviour:
   enemyType: 0
   combatZone: {fileID: 869765099}
   agent: {fileID: 1640864940}
+  animationScript: {fileID: 1640864944}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -88421,6 +88659,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!95 &1640864943
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640864937}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1640864944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640864937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
 --- !u!1 &1641765170
 GameObject:
   m_ObjectHideFlags: 0
@@ -96463,8 +96736,10 @@ GameObject:
   - component: {fileID: 1808659799}
   - component: {fileID: 1808659798}
   - component: {fileID: 1808659797}
+  - component: {fileID: 1808659802}
+  - component: {fileID: 1808659801}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy6
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96561,6 +96836,8 @@ MonoBehaviour:
   enemyType: 2
   combatZone: {fileID: 2129000478}
   agent: {fileID: 1808659798}
+  animationScript: {fileID: 1808659801}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -96588,6 +96865,41 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.83, z: 0}
+--- !u!114 &1808659801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808659795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
+--- !u!95 &1808659802
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808659795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1808782205
 GameObject:
   m_ObjectHideFlags: 0
@@ -103678,8 +103990,10 @@ GameObject:
   - component: {fileID: 1929817587}
   - component: {fileID: 1929817590}
   - component: {fileID: 1929817591}
+  - component: {fileID: 1929817592}
+  - component: {fileID: 1929817593}
   m_Layer: 6
-  m_Name: BaseEnemy1
+  m_Name: BaseEnemy0
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103704,6 +104018,8 @@ MonoBehaviour:
   enemyType: 0
   combatZone: {fileID: 869765099}
   agent: {fileID: 1929817590}
+  animationScript: {fileID: 1929817593}
+  player: {fileID: 77325606}
   enemyCover: 0
   enemyAlive: 1
   health: 100
@@ -103802,6 +104118,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1929817592
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929817586}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87c07d0369196a840bafe7dfbed5c383, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1929817593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929817586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e9fc8ddee4144fb224e3cc051778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standing: 0
 --- !u!1 &1930393975
 GameObject:
   m_ObjectHideFlags: 0

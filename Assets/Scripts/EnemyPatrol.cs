@@ -14,6 +14,10 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] public int enemyType;
     public CombatZones combatZone;
     public NavMeshAgent agent;
+    public TrialAnimation animationScript;
+    public Transform player;
+
+    Rigidbody rb;
 
     // Variables internas
     public bool enemyCover = false;
@@ -38,10 +42,12 @@ public class EnemyPatrol : MonoBehaviour
 
     void Start()
     {
+        animationScript = GetComponent<TrialAnimation>();
         if (agent != null && patrolPoints.Length > 0)
         {
             agent.SetDestination(patrolPoints[currentPoint].position);
         }
+        rb = GetComponent<Rigidbody>();
     }
     private void Update()
     {
@@ -52,6 +58,7 @@ public class EnemyPatrol : MonoBehaviour
             currentPoint = (currentPoint + 1) % patrolPoints.Length;
             agent.SetDestination(patrolPoints[currentPoint].position);
         }
+        transform.LookAt(player);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -146,6 +153,7 @@ public class EnemyPatrol : MonoBehaviour
 
     public void ShootingNormal()
     {
+        animationScript.Shoot();
         if (warningShots < 5)
         {
             Debug.Log("Enemy is shooting, but misses, shots: " + warningShots);
@@ -189,6 +197,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (targetPoint < 1)
         {
+            animationScript.Stand();
             Debug.Log("Waiting");
             yield return new WaitForSeconds(waitTime); // Espera unos segundos
 
@@ -196,6 +205,7 @@ public class EnemyPatrol : MonoBehaviour
             Debug.Log("Moving");
             targetPoint++;
             agent.SetDestination(patrolPoints[targetPoint].position);
+            animationScript.Run();
 
             yield return new WaitForSeconds(waitTime);
 
@@ -231,6 +241,8 @@ public class EnemyPatrol : MonoBehaviour
     }
     public void KillEnemy()
     {
+        animationScript.Dead();
+
         if (!enemyAlive) return;
         enemyAlive = false;
         Debug.Log($"[EnemyPatrol] {name} murió.");
@@ -244,7 +256,6 @@ public class EnemyPatrol : MonoBehaviour
         {
             Debug.LogWarning($"[EnemyPatrol] {name} no tiene zona asignada.");
         }
-
         gameObject.SetActive(false);
     }
 }
