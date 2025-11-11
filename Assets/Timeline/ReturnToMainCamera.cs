@@ -1,11 +1,13 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class ReturnToMainCamera : MonoBehaviour
 {
-    public PlayableDirector director;
-    public Camera mainCamera;
-    public Camera[] timelineCameras;
+    [Header("Asignar desde el inspector")]
+    public PlayableDirector director;                  // Tu Timeline
+    public CinemachineCamera mainVCam;          // La cámara principal (por ejemplo, la del riel)
+    public CinemachineCamera[] timelineVCams;   // Cámaras de la Timeline
 
     void Start()
     {
@@ -14,12 +16,18 @@ public class ReturnToMainCamera : MonoBehaviour
 
     void OnTimelineStopped(PlayableDirector d)
     {
-        // Desactiva todas las cámaras de la cinemática
-        foreach (var cam in timelineCameras)
-            cam.enabled = false;
+        // Bajar prioridad de las cámaras usadas en la Timeline
+        foreach (var vcam in timelineVCams)
+        {
+            if (vcam != null)
+                vcam.Priority = 0;
+        }
 
-        // Activa la cámara principal
-        mainCamera.enabled = true;
+        // Subir prioridad de la cámara principal (la del riel)
+        if (mainVCam != null)
+            mainVCam.Priority = 20;
+
+        Debug.Log("Timeline terminada: regresando a la cámara principal (en riel).");
     }
 
     void OnDestroy()
