@@ -28,6 +28,8 @@ public class EnemyPatrol : MonoBehaviour
     int warningShots = 0;
     private int currentPoint = 0;
 
+    private bool isBusy = false; // Indica si el enemigo está en una secuencia especial
+
     [Header("Zona asignada")]
     public CombatZones currentZone;
 
@@ -52,6 +54,9 @@ public class EnemyPatrol : MonoBehaviour
     private void Update()
     {
         if (!enemyAlive || agent == null || patrolPoints.Length == 0) return;
+
+        // Mientras está en una secuencia (bazooka, etc.), no patrullar
+        if (isBusy) return;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -83,6 +88,7 @@ public class EnemyPatrol : MonoBehaviour
                     break;
 
                 case 3: // Enemigo con Bazooka
+                    Debug.Log("Type 3 Secuence");
                     StartCoroutine(BazookaShoot());
 
                     break;
@@ -95,29 +101,19 @@ public class EnemyPatrol : MonoBehaviour
 
     IEnumerator BazookaShoot()
     {
+        isBusy = true;
+        agent.isStopped = true;   // se queda quieto
+
         Debug.Log("Enemy is preparing to shoot bazooka...");
-        yield return new WaitForSeconds(2f); // Tiempo de preparación
+        yield return new WaitForSeconds(2f);
+
         Debug.Log("Enemy fires bazooka at player!");
-        yield return new WaitForSeconds(1f); // Tiempo de vuelo del bazooka
+        yield return new WaitForSeconds(1f);
+        PlayerHealthManager.Instance.DamageTaken();
 
-        /*if (PlayerCover.isCovering == true)
-        {
-            Debug.Log("Player is in cover, bazooka missed!");
-        }
-        else
-        {
-            PlayerHealthManager.Instance.DamageTaken(); // Asume que el bazooka siempre acierta
-        }*/
-        PlayerHealthManager.Instance.DamageTaken(); // Asume que el bazooka siempre acierta
-
-        if (targetPoint == 0)
-        {
-            yield return StartCoroutine(WaitAndMoveNext(3)); // se mueve al siguiente punto después de disparar
-        }
-        else
-        {
-            yield return StartCoroutine(EnemyReload(3)); // espera la recarga antes de continuar
-        }
+        // Aquí decides cuándo lo dejas moverse otra vez
+        agent.isStopped = false;
+        isBusy = false;
     }
 
     IEnumerator ShootingLoop(int Type)
@@ -144,6 +140,7 @@ public class EnemyPatrol : MonoBehaviour
 
             case 3:
                 yield return StartCoroutine(BazookaShoot());
+                yield return new WaitForSeconds(10f);
                 break;
 
             default:
@@ -195,7 +192,7 @@ public class EnemyPatrol : MonoBehaviour
 
     IEnumerator WaitAndMoveNext(int type)
     {
-        if (targetPoint < 1)
+        if (targetPoint == 0)
         {
             animationScript.Stand();
             Debug.Log("Waiting");
@@ -209,17 +206,7 @@ public class EnemyPatrol : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            /*if (targetPoint >= patrolPoints.Length)
-            {
-                Debug.Log("Patrol finished.");
-            }
-
-            if (targetPoint != 0)
-            {
-                //Shooting();
-            }*/
-
-            ShootingLoop(type);
+            yield return ShootingLoop(type);
         }
         else
         {
