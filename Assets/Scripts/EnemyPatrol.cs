@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -185,9 +186,11 @@ public class EnemyPatrol : MonoBehaviour
     {
         Debug.Log("Enemy is raising shield...");
         enemyCover = true;
+        animationScript.CoverShield();
         yield return new WaitForSeconds(3f); // Tiempo con escudo
         Debug.Log("Enemy is lowering shield...");
         enemyCover = false;
+        animationScript.UncoverShield();
     }
 
     IEnumerator WaitAndMoveNext(int type)

@@ -27,6 +27,7 @@ public class GunScript : MonoBehaviour
     private bool hitSomething;
 
     private int layerMask;
+    public PostprocessManager postProcessManager;
 
     void Start()
     {
@@ -43,6 +44,7 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            postProcessManager.GunShot(Color.white, new Vector4(2,2,0,1), 0.05f);
             fireRequested = true;
         }
     }
