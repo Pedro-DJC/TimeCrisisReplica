@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 7fd035854845bb946ba4f725762aa012
   - enabled: 1
+    path: Assets/Scenes/Timeline.unity
+    guid: 69a58dc20a79f854c88a26e3af2a3afc
+  - enabled: 1
     path: Assets/Scenes/Crisis_Level1.unity
     guid: b7a6ce53dd72c13448cf0c106657e336
   m_configObjects:
