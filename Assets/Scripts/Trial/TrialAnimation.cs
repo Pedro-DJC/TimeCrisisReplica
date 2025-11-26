@@ -16,61 +16,35 @@ public class TrialAnimation : MonoBehaviour
     }
     public void Dead() //Telling is dead
     {
-        animator.SetBool("IsDead", true);
-        animator.SetBool("IsRunnning", false);
-        animator.SetBool("IsStanding", false);
-        animator.SetBool("IsCrouching", false);
-        animator.SetBool("IsFiring", false);
-        animator.SetBool("Standup", false);
-
-        standing = false;
+        animator.SetTrigger("IsDead");
     }
 
     public void Run() //Telling to walk
     {
-        animator.SetBool("IsDead", false);
-        animator.SetBool("IsRunnning", true);
-        animator.SetBool("IsStanding", false);
-        animator.SetBool("IsCrouching", false);
-        animator.SetBool("IsFiring", false);
-        animator.SetBool("Standup", false);
-
-        standing = false;
+        animator.SetTrigger("IsRunning");
     }
 
     public void Stand() //Telling to stand
     {
-        animator.SetBool("IsDead", false);
-        animator.SetBool("IsRunnning", false);
-        animator.SetBool("IsStanding", true);
-        animator.SetBool("IsCrouching", false);
-        animator.SetBool("IsFiring", false);
-        animator.SetBool("Standup", false);
-
-        standing = true;
+        animator.SetTrigger("IsStanding");
     }
 
     public void Crouch() //Telling is crouching
     {
-        animator.SetBool("IsDead", false);
-        animator.SetBool("IsRunnning", false);
-        animator.SetBool("IsStanding", false);
-        animator.SetBool("IsCrouching", true);
-        animator.SetBool("IsFiring", false);
-        animator.SetBool("Standup", false);
-
-        standing = true;
+        animator.SetTrigger("IsCrouching");
     }
 
     public void Shoot() //Telling is Shooting
     {
-        animator.SetBool("IsDead", false);
-        animator.SetBool("IsRunnning", false);
-        animator.SetBool("IsStanding", false);
-        animator.SetBool("IsCrouching", false);
-        animator.SetBool("IsFiring", true);
-        animator.SetBool("Standup", false);
+        animator.SetTrigger("IsFiring");
+    }
 
-        standing = true;
+    public void CoverShield()
+    {
+        animator.SetTrigger("Cover");
+    }
+    public void UncoverShield()
+    {
+        animator.SetTrigger("Uncover");
     }
 }

@@ -26,7 +26,7 @@ public class PostprocessManager : MonoBehaviour
         vignetteTween?.Kill();
         vignetteTween = DOTween.To(() => vigentte.intensity.value, x => vigentte.intensity.value = x, intensity, tweenTime).SetLoops(loops, LoopType.Yoyo).OnComplete(() => vigentte.intensity.value = 0);
     }
-    public void DamageColorFilter(Color filterColor, Color endColor, float tweenTime)
+    public void GunShot(Color filterColor, Color endColor, float tweenTime)
     {
         colorAdjustments.colorFilter.value = filterColor;
         vignetteTween?.Kill();
