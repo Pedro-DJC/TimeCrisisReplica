@@ -11,6 +11,8 @@ public class TimerManager : MonoBehaviour
     private float currentTime;
     private bool isRunning = true;
 
+    public float timePerEnemyKill = 5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -57,5 +59,18 @@ public class TimerManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    void AddTime(float seconds)
+    {
+        if (!isRunning) return;
+
+        currentTime += seconds;
+        UpdateTimerText();
+    }
+
+    public void OnEnemyKilled()
+    {
+        AddTime(timePerEnemyKill);
     }
 }

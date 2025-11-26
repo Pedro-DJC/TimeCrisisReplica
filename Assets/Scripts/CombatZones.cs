@@ -13,6 +13,8 @@ public class CombatZones : MonoBehaviour
 
     private List<EnemyPatrol> enemies = new List<EnemyPatrol>();
 
+    public TimerManager gameTimer;
+
     private void Awake()
     {
         enemies = new List<EnemyPatrol>(GetComponentsInChildren<EnemyPatrol>(true));
@@ -84,6 +86,16 @@ public class CombatZones : MonoBehaviour
         }
 
         Debug.Log($"[CombatZone] {enemyGO.name} eliminado. Restantes: {aliveCount}");
+
+        if (gameTimer != null)
+        {
+            gameTimer.OnEnemyKilled();
+            Debug.Log($"[CombatZone] Tiempo extra otorgado por muerte de {enemyGO.name}");
+        }
+        else
+        {
+            Debug.LogWarning("[CombatZone] No hay referencia al GameTimer asignada.");
+        }
 
         if (aliveCount <= 0 && !zoneCleared)
         {
